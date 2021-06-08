@@ -1,0 +1,25 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: demo
+  name: node-server-kube-svc-ig
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: node-server-kube-svc
+              servicePort: 80
+
+#$ kubectl get service -n demo
+#NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+#node-server-kube-svc   ClusterIP   zzz.zzz.zzz.zzz   <none>        80/TCP    99s
+#$ kubectl get ingress -n demo
+#NAME                      CLASS    HOSTS   ADDRESS                           PORTS   AGE
+#node-server-kube-svc-ig   <none>   *       xxx.us-west-1.elb.amazonaws.com   80      2m2s

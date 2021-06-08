@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: demo
+  name: node-server-kube-svc-np
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    nodePort: 30123
+  #- name: https
+    #port: 443
+    #targetPort: 8443
+  selector:
+    app: node-server-kube-target
+
+# EC2 can be in a private or public subnet. Make sure you access it either from outside ow within VPC. Also make sure SG permits.
+# For public subnet, use the external IP
+# kubectl get nodes -o wide |  awk {'print $1" " $2 " " $7'} | column -t
+# For private subnet, use the internal IP
+# kubectl get nodes -o wide |  awk {'print $1" " $2 " " $6'} | column -t
+# You can test internal IP from another instance in the same SG
+#
+#NAME                                       STATUS  INTERNAL-IP
+#ip-10-3-12-200.us-west-1.compute.internal  Ready   10.3.12.100
+#
+#sh-4.2$ curl http://10.3.12.200:30123
+#You've hit node-server-kube-rs-7xxmf. Time=1623144422990
