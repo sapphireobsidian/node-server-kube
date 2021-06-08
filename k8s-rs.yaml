@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  namespace: demo
+  name: node-server-kube-rs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-server-kube-target
+  template:
+    metadata:
+      labels:
+        app: node-server-kube-target
+        env: stg
+    spec:
+      containers:
+      - name: node-server-kube
+        image: xxx/node-server-kube
+        livenessProbe: 
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15        
+        ports:
+        - containerPort: 8080

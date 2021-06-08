@@ -20,7 +20,7 @@ docker stop node-server-kube-container
 docker rm node-server-kube-container
 
 # Tag Container
-docker tag node-server-kube christofersonchua/node-server-kube:latest
+docker tag node-server-kube xxx/node-server-kube:latest
 
 # Push Container
-docker push christofersonchua/node-server-kube:latest
+docker push xxx/node-server-kube:latest

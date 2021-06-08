@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: demo 
+  name: node-server-blank
+  labels:
+     env: dev
+  annotations:
+     company: acme
+spec:
+  containers:
+  - image: xxx/node-server-blank
+    name: node-server-blank
+    livenessProbe: 
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 15
+    ports:
+    - containerPort: 8080
+      protocol: TCP
